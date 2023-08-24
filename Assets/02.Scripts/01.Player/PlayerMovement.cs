@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveVec;
     private float _inputX;
 
+    private bool _isGround;
+    private RaycastHit2D _rayHit;
+    [SerializeField] private LayerMask _groundLayer;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -23,6 +27,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        _isGround = CheckGround();
+
+        PlayerMove();
+        PlayerJump();
+    }
+
+    private void FixedUpdate()
+    {
+        _rb.velocity = _moveVec * _moveSpeed + Vector2.up * _rb.velocity.y;
+    }
+
+    private bool CheckGround()
+    {
+        return Physics2D.Raycast(transform.position, Vector2.down, 0.05f, _groundLayer);
+    }
+
+    private void PlayerMove()
+    {
         _inputX = Input.GetAxisRaw("Horizontal");
         if (_inputX == 0)
         {
@@ -30,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if(_inputX > 0)
+            if (_inputX > 0)
             {
                 _playerSprite.flipX = !_spriteDefaultRight;
             }
@@ -41,15 +63,14 @@ public class PlayerMovement : MonoBehaviour
             }
             _moveVec = Vector2.right * _inputX;
         }
+    }
 
+    private void PlayerJump()
+    {
+        if (!_isGround) return;
         if (Input.GetButtonDown("Jump"))
         {
             _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        _rb.velocity = _moveVec * _moveSpeed + Vector2.up * _rb.velocity.y;
     }
 }

@@ -11,6 +11,13 @@ TagManager:
   - 
   - Water
   - UI
+  - Player
+  - PlayerBullet
+  - 
+  - 
+  - Ground
+  - FieldObject
+  - FieldBullet
   - 
   - 
   - 
@@ -18,15 +25,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - EnemyBullet
   - 
   - 
   - 
