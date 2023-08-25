@@ -100,7 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveVec: {x: -2, y: 0}
-  _mass: 0
+  _psyLevel: 0
+  _psyPranet: {fileID: 0}
+  damage: 1
 --- !u!50 &2939079635873575372
 Rigidbody2D:
   serializedVersion: 4

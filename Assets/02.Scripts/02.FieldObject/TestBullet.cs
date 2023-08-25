@@ -16,6 +16,10 @@ public class TestBullet : MonoBehaviour, Ikinesis
         get { return _psyPranet; }
     }
 
+    public OrderType Order { get; private set; }
+
+    [SerializeField] private int damage;
+
 
     private void Start()
     {
@@ -40,6 +44,7 @@ public class TestBullet : MonoBehaviour, Ikinesis
         //MoveVec += vector;
 
         _rb.AddForce(vector, ForceMode2D.Impulse);
+        Order = OrderType.Player;
     }
     public void StopPSYForce(bool notGravite = false)
     {
@@ -61,6 +66,13 @@ public class TestBullet : MonoBehaviour, Ikinesis
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
+                Destroy(gameObject);
+            }
+            if (_psyPranet == null
+                && collision.TryGetComponent(out IHitAction hit)
+                && hit.Order != Order)
+            {
+                hit.OnHit(damage);
                 Destroy(gameObject);
             }
         }
