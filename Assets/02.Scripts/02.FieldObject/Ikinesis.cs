@@ -4,9 +4,8 @@ using UnityEngine;
 
 public interface Ikinesis
 {
-    public Transform PSYPranet { get; set; }
-    public Vector2 MoveVec {  get; set; }
-    public float Mass { get; set; }
+    public int PSYLevel { get;}
+    public Transform PSYPranet { get; }
     public void AddPSYForce(Vector2 vector);
     public void StopPSYForce(bool notGravite = false);
     public void SetPSYPranet(Transform pranet);

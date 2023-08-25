@@ -7,24 +7,15 @@ public class TestBullet : MonoBehaviour, Ikinesis
     private Rigidbody2D _rb;
     [SerializeField] private Vector2 _moveVec;
 
-    public Vector2 MoveVec
-    {
-        get { return _moveVec; }
-        set { _moveVec = value; }
-    }
-    [SerializeField] private float _mass;
-    public float Mass
-    {
-        get { return _mass; }
-        set { _mass = value; }
-    }
+    [SerializeField] private int _psyLevel;
+    public int PSYLevel => _psyLevel;
 
     [SerializeField] private Transform _psyPranet;
     public Transform PSYPranet
     {
         get { return _psyPranet; }
-        set { _psyPranet = value; }
     }
+
 
     private void Start()
     {
@@ -33,20 +24,21 @@ public class TestBullet : MonoBehaviour, Ikinesis
             _rb = gameObject.AddComponent<Rigidbody2D>();
         }
 
-        _rb.AddForce(MoveVec, ForceMode2D.Impulse);
+        _rb.AddForce(_moveVec, ForceMode2D.Impulse);
     }
 
     private void Update()
     {
-        if(PSYPranet != null)
+        if (PSYPranet != null)
         {
-            _rb.MovePosition( Vector2.Lerp(transform.position ,PSYPranet.position+Vector3.up,.5f));
+            _rb.MovePosition(Vector2.Lerp(transform.position, PSYPranet.position + Vector3.up, .5f));
         }
     }
 
     public void AddPSYForce(Vector2 vector)
     {
         //MoveVec += vector;
+
         _rb.AddForce(vector, ForceMode2D.Impulse);
     }
     public void StopPSYForce(bool notGravite = false)
@@ -60,7 +52,7 @@ public class TestBullet : MonoBehaviour, Ikinesis
     }
     public void SetPSYPranet(Transform pranet)
     {
-        PSYPranet = pranet;
+        _psyPranet = pranet;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,5 +66,5 @@ public class TestBullet : MonoBehaviour, Ikinesis
         }
     }
 
-    
+
 }

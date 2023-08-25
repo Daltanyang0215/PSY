@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (bullet.TryGetComponent(out testBullet))
                 {
-                    testBullet.AddPSYForce(Vector2.down * 5);
+                    testBullet.AddPSYForce((bullet.transform.position -transform.position).normalized*5);
                 }
             }
         }
