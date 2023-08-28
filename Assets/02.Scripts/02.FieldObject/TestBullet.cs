@@ -18,6 +18,8 @@ public class TestBullet : MonoBehaviour, Ikinesis
 
     public OrderType Order { get; private set; }
 
+    public Transform Transform => transform;
+
     [SerializeField] private int damage;
 
 

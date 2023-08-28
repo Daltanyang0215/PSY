@@ -768,6 +768,9 @@ MonoBehaviour:
   graviteLayer:
     serializedVersion: 2
     m_Bits: 2097152
+  _keyboardskills:
+  - inputKey: 101
+    skill: {fileID: 11400000, guid: 43029e695ccf29248a67ad53b15cb23a, type: 2}
 --- !u!114 &1897597081
 MonoBehaviour:
   m_ObjectHideFlags: 0

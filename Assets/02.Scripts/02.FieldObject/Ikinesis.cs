@@ -12,6 +12,7 @@ public interface Ikinesis
 {
     public OrderType Order { get;}
     public int PSYLevel { get;}
+    public Transform Transform { get; }
     public Transform PSYPranet { get; }
     public void AddPSYForce(Vector2 vector);
     public void StopPSYForce(bool notGravite = false);
