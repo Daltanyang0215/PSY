@@ -2,24 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBullet : MonoBehaviour, Ikinesis
+public class TestBullet : KinesisObjectBase
 {
     private Rigidbody2D _rb;
     [SerializeField] private Vector2 _moveVec;
-
-    [SerializeField] private int _psyLevel;
-    public int PSYLevel => _psyLevel;
-
-    [SerializeField] private Transform _psyPranet;
-    public Transform PSYPranet
-    {
-        get { return _psyPranet; }
-    }
-
-    public OrderType Order { get; private set; }
-
-    public Transform Transform => transform;
-
     [SerializeField] private int damage;
 
 
@@ -41,26 +27,43 @@ public class TestBullet : MonoBehaviour, Ikinesis
         }
     }
 
-    public void AddPSYForce(Vector2 vector)
+    public override void AddPSYForce(Vector2 vector)
     {
         //MoveVec += vector;
 
         _rb.AddForce(vector, ForceMode2D.Impulse);
-        Order = OrderType.Player;
     }
-    public void StopPSYForce(bool notGravite = false)
+    public override void StopPSYForce(bool notGravite = false)
     {
         //MoveVec = Vector2.zero;
-        _rb.velocity = Vector2.zero;
-        if (!notGravite)
+        if (PSYLevel == 0)
         {
+            _rb.velocity = Vector2.zero;
+
+        }
+        else
+        {
+            _rb.drag = 2/(PSYLevel- PlayerState.Instance.PsyLevel);
+            if (_rb.velocity == Vector2.zero)
+            {
+                _rb.drag = 0;
+            }
+        }
+
+        //_rb.velocity = Vector2.Lerp(_rb.velocity, Vector2.zero, PSYLevel == 0 ? 1 : 1 / Time.deltaTime);// (PlayerState.Instance.PsyLevel / (float)PSYLevel)
+
+        if (notGravite)
+        {
+            _rb.gravityScale = 0;
+        }
+        else
+        {
+            _rb.drag = 0;
             _rb.gravityScale = 1;
         }
     }
-    public void SetPSYPranet(Transform pranet)
-    {
-        _psyPranet = pranet;
-    }
+    
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -70,7 +73,7 @@ public class TestBullet : MonoBehaviour, Ikinesis
             {
                 Destroy(gameObject);
             }
-            if (_psyPranet == null
+            if (PSYPranet == null
                 && collision.TryGetComponent(out IHitAction hit)
                 && hit.Order != Order)
             {

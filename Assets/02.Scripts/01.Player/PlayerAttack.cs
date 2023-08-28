@@ -12,9 +12,9 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private List<PSYSkillKeySet> _keyboardskills = new List<PSYSkillKeySet>();
 
-    private Ikinesis target;
+    private KinesisObjectBase target;
     private Vector2 startvec;
-    private List<Ikinesis> _kineses = new List<Ikinesis>();
+    private List<KinesisObjectBase> _kineses = new List<KinesisObjectBase>();
 
 
     private void Update()
@@ -39,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
         {
             Collider2D[] enemybullets = Physics2D.OverlapBoxAll(transform.position, Vector2.one * graviteRange, 0, graviteLayer);
 
-            Ikinesis testBullet = null;
+            KinesisObjectBase testBullet = null;
             foreach (Collider2D bullet in enemybullets)
             {
                 if (bullet.TryGetComponent(out testBullet))

@@ -99,9 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e7ed5849f0392468a3e61de2e6c3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _psyLevel: 2
   _moveVec: {x: -2, y: 0}
-  _psyLevel: 0
-  _psyPranet: {fileID: 0}
   damage: 1
 --- !u!50 &2939079635873575372
 Rigidbody2D:
