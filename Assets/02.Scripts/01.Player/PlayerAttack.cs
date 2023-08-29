@@ -1,87 +1,39 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerAttack))]
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private KeyCode graviteKey;
-    [SerializeField] private float graviteRange;
-    [SerializeField] private LayerMask graviteLayer;
+    private List<PSYSkillKeySet> _skillKeyboardSets;
+    private List<PSYSkillKeySet> _skillMouseSets;
 
-    [SerializeField] private List<PSYSkillKeySet> _keyboardskills = new List<PSYSkillKeySet>();
+    private Camera _camera;
+    private Vector2 _mousePos;
 
     private KinesisObjectBase target;
     private Vector2 startvec;
     private List<KinesisObjectBase> _kineses = new List<KinesisObjectBase>();
 
+    private void Start()
+    {
+        _camera = Camera.main;
+        _skillKeyboardSets = PlayerState.Instance.SkillKeySets;
+        _skillMouseSets = PlayerState.Instance.SkillsMouseSets;
+    }
 
     private void Update()
     {
-        foreach (PSYSkillKeySet skillSet in _keyboardskills)
-        {
-            if (Input.GetKeyDown(skillSet.inputKey))
-            {
-                skillSet.skill.OnPSYEnter(transform.position,graviteLayer);
-            }
-            if (Input.GetKey(skillSet.inputKey))
-            {
-                skillSet.skill.OnPSYUpdate(transform.position, graviteLayer);
-            }
-            if (Input.GetKeyUp(skillSet.inputKey))
-            {
-                skillSet.skill.OnPSYExit(transform.position, graviteLayer);
-            }
-        }
-
-        if (Input.GetKeyDown(graviteKey))
-        {
-            Collider2D[] enemybullets = Physics2D.OverlapBoxAll(transform.position, Vector2.one * graviteRange, 0, graviteLayer);
-
-            KinesisObjectBase testBullet = null;
-            foreach (Collider2D bullet in enemybullets)
-            {
-                if (bullet.TryGetComponent(out testBullet))
-                {
-                    testBullet.AddPSYForce((bullet.transform.position -transform.position).normalized*5);
-                }
-            }
-        }
-        //if (Input.GetKey(KeyCode.E))
-        //{
-        //    Collider2D[] enemybullets = Physics2D.OverlapBoxAll(transform.position, Vector2.one * graviteRange, 0, graviteLayer);
-
-        //    Ikinesis testBullet = null;
-        //    foreach (Collider2D bullet in enemybullets)
-        //    {
-        //        if (bullet.TryGetComponent(out testBullet))
-        //        {
-        //            testBullet.StopPSYForce(true);
-        //        }
-        //    }
-        //}
-        //if (Input.GetKeyUp(KeyCode.E))
-        //{
-        //    Collider2D[] enemybullets = Physics2D.OverlapBoxAll(transform.position, Vector2.one * graviteRange, 0, graviteLayer);
-
-        //    Ikinesis testBullet = null;
-        //    foreach (Collider2D bullet in enemybullets)
-        //    {
-        //        if (bullet.TryGetComponent(out testBullet))
-        //        {
-        //            testBullet.StopPSYForce();
-        //        }
-        //    }
-        //}
-
-        
+        KeyBoardSkill();
+        MouseSkill();
 
 
         if (Input.GetMouseButtonDown(0))
         {
             startvec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D enemybullet = Physics2D.OverlapBox(startvec, Vector2.one, 0, graviteLayer);
+            Collider2D enemybullet = Physics2D.OverlapBox(startvec, Vector2.one, 0, PlayerState.Instance.AttackTargetLayer);
 
             if (enemybullet != null && enemybullet.TryGetComponent(out target))
             {
@@ -106,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             startvec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D enemybullet = Physics2D.OverlapBox(startvec, Vector2.one, 0, graviteLayer);
+            Collider2D enemybullet = Physics2D.OverlapBox(startvec, Vector2.one, 0, PlayerState.Instance.AttackTargetLayer);
 
             if (enemybullet != null && enemybullet.TryGetComponent(out target))
             {
@@ -122,10 +74,50 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+
+    public void KeyBoardSkill()
+    {
+        foreach (PSYSkillKeySet skillSet in _skillKeyboardSets)
+        {
+            if (Input.GetKeyDown(skillSet.inputKey))
+            {
+                skillSet.skill.OnPSYEnter(transform.position, PlayerState.Instance.AttackTargetLayer);
+            }
+            else if (Input.GetKey(skillSet.inputKey))
+            {
+                skillSet.skill.OnPSYUpdate(transform.position, PlayerState.Instance.AttackTargetLayer);
+            }
+            else if (Input.GetKeyUp(skillSet.inputKey))
+            {
+                skillSet.skill.OnPSYExit(transform.position, PlayerState.Instance.AttackTargetLayer);
+            }
+        }
+    }
+    public void MouseSkill()
+    {
+        _mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
+
+        foreach (PSYSkillKeySet skillSet in _skillMouseSets)
+        {
+            if (Input.GetKeyDown(skillSet.inputKey))
+            {
+                skillSet.skill.OnPSYEnter(_mousePos, PlayerState.Instance.AttackTargetLayer);
+            }
+            else if (Input.GetKey(skillSet.inputKey))
+            {
+                skillSet.skill.OnPSYUpdate(_mousePos, PlayerState.Instance.AttackTargetLayer);
+            }
+            else if (Input.GetKeyUp(skillSet.inputKey))
+            {
+                skillSet.skill.OnPSYExit(_mousePos, PlayerState.Instance.AttackTargetLayer);
+            }
+        }
+    }
 }
 [Serializable]
 public class PSYSkillKeySet
 {
+    public string name;
     public KeyCode inputKey;
     public PSYSkillBase skill;
 }

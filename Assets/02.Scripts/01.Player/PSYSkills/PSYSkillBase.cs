@@ -9,6 +9,8 @@ public abstract class PSYSkillBase : ScriptableObject, IPSYSkill
     [SerializeField] private int _psyMP;
     public int PSYMP => _psyMP;
 
+    public bool IsActive { get; protected set; }
+
     public abstract void OnPSYEnter(Vector3 point, LayerMask targetlayer);
 
     public abstract void OnPSYUpdate(Vector3 point, LayerMask targetlayer);

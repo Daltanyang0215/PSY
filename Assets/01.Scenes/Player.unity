@@ -306,7 +306,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1897597076}
@@ -351,9 +351,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.51366144, g: 0.80355537, b: 0.9150943, a: 0.46666667}
+  m_Color: {r: 0.51366144, g: 0.80355537, b: 0.9150943, a: 0.03529412}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -632,11 +632,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1897597076}
+  - component: {fileID: 1897597081}
   - component: {fileID: 1897597078}
   - component: {fileID: 1897597077}
   - component: {fileID: 1897597079}
   - component: {fileID: 1897597080}
-  - component: {fileID: 1897597081}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -722,7 +722,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 498104adf2d008c4983ec5a08f30f2ee, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -745,12 +745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ec823072b6ee04287158dee020ded9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _jumpPower: 8
-  _spriteDefaultRight: 1
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 1025
 --- !u!114 &1897597080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,14 +757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fa3f8b8fa2b9544b95bf569eceafc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graviteKey: 102
-  graviteRange: 10
-  graviteLayer:
-    serializedVersion: 2
-    m_Bits: 2097152
-  _keyboardskills:
-  - inputKey: 101
-    skill: {fileID: 11400000, guid: 43029e695ccf29248a67ad53b15cb23a, type: 2}
 --- !u!114 &1897597081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,6 +774,27 @@ MonoBehaviour:
   _hp: 0
   _mpMax: 10
   _mp: 0
+  _clipmp: 0
+  _mpRecoveryPerStartSec: 3
+  _mpRecoveryPerSec: 1
+  _mpRecoveryTime: 1
+  _moveSpeed: 6
+  _jumpPower: 10
+  _spriteDefaultRight: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 1025
+  _attackTargetLayer:
+    serializedVersion: 2
+    m_Bits: 2097152
+  _keyboardskills:
+  - name: PSYStop
+    inputKey: 101
+    skill: {fileID: 11400000, guid: 43029e695ccf29248a67ad53b15cb23a, type: 2}
+  - name: PSYExplosion
+    inputKey: 102
+    skill: {fileID: 11400000, guid: 48f8ef10056e71241bf340cbd40ac986, type: 2}
+  _mouseskills: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

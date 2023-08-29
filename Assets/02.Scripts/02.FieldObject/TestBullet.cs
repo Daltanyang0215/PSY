@@ -30,7 +30,9 @@ public class TestBullet : KinesisObjectBase
     public override void AddPSYForce(Vector2 vector)
     {
         //MoveVec += vector;
-
+        _rb.drag = 0;
+        _rb.gravityScale = 0;
+        _rb.velocity = Vector2.zero;
         _rb.AddForce(vector, ForceMode2D.Impulse);
     }
     public override void StopPSYForce(bool notGravite = false)

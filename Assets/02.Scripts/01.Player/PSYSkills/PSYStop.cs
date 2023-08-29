@@ -9,8 +9,15 @@ public class PSYStop : PSYSkillBase
     private List<KinesisObjectBase> _prevKineses = new List<KinesisObjectBase>();
     private List<KinesisObjectBase> _curKineses = new List<KinesisObjectBase>();
 
+    private float timer;
+
     public override void OnPSYEnter(Vector3 point, LayerMask targetlayer)
     {
+        if (!PlayerState.Instance.CheckMpPoint(PSYMP)) return;
+
+        IsActive = true;
+        timer = 1;
+
         _curKineses.Clear();
         _prevKineses.Clear();
 
@@ -31,6 +38,21 @@ public class PSYStop : PSYSkillBase
 
     public override void OnPSYUpdate(Vector3 point, LayerMask targetlayer)
     {
+        if(!IsActive) return;
+
+        // 1초 마다 마나소모
+        timer -= Time.deltaTime;
+        if (timer <= 0) 
+        {
+            if (!PlayerState.Instance.CheckMpPoint(PSYMP))
+            {
+                OnPSYExit(point, targetlayer);
+                IsActive = false;
+                return;
+            }
+                timer = 1;
+        }
+
 
         Collider2D[] kineseTargets = Physics2D.OverlapCircleAll(point, _skillRange, targetlayer);
 
@@ -68,6 +90,8 @@ public class PSYStop : PSYSkillBase
 
     public override void OnPSYExit(Vector3 point, LayerMask targetlayer)
     {
+        if(!IsActive) return;
+
         foreach (KinesisObjectBase target in _prevKineses)
         {
             if (target != null)

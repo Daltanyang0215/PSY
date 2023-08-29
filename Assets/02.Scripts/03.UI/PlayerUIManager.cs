@@ -8,6 +8,7 @@ public class PlayerUIManager : MonoBehaviour
 {
     [SerializeField] private Slider _playerHpSlider;
     [SerializeField] private Slider _playerMpSlider;
+    [SerializeField] private Slider _playerClipMpSlider;
 
     private void Update()
     {
@@ -24,5 +25,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (_playerMpSlider.value != PlayerState.Instance.PlayerMpUI)
             _playerMpSlider.value = PlayerState.Instance.PlayerMpUI;
+        if (_playerClipMpSlider.value != PlayerState.Instance.PlayerClipMpUI)
+            _playerClipMpSlider.value = PlayerState.Instance.PlayerClipMpUI;
     }
 }
