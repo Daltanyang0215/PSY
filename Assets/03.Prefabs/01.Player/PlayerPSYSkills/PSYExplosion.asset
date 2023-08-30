@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974d1ab330ce15249af5233f3ae636c1, type: 3}
   m_Name: PSYExplosion
   m_EditorClassIdentifier: 
+  _id: 1
   _psyLevel: 1
   _psyMP: 2
   _skillRange: 3

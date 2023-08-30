@@ -84,10 +84,7 @@ public class PlayerState : MonoBehaviour, IHitAction
 
             _mpRecTimer = _mpRecoveryPerStartSec;
 
-            if(_mp > _mpMax-_clipmp)
-            {
-                _mp = _mpMax- _clipmp;
-            }
+            MpClamp();
             return true;
         }
         return false;
@@ -95,13 +92,24 @@ public class PlayerState : MonoBehaviour, IHitAction
 
     public bool CheckClipMpPoint(int usingMP)
     {
-        if (usingMP <= _mp)
+        if (usingMP <= _mp && CheckMpPoint(usingMP))
         {
             _clipmp += usingMP;
 
-            return CheckMpPoint(0);
+            if(_clipmp < 0) _clipmp = 0;
+
+            MpClamp();
+            return true;
         }
         return false;
+    }
+
+    private void MpClamp()
+    {
+        if (_mp > _mpMax - _clipmp)
+        {
+            _mp = _mpMax - _clipmp;
+        }
     }
 
     public void OnHit(int damage)

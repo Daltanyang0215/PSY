@@ -11,7 +11,7 @@ public enum OrderType
 public abstract class KinesisObjectBase : MonoBehaviour
 {
     public OrderType Order { get; private set; }
-
+    public byte EffectSkill { get; private set; }
     [SerializeField] private int _psyLevel;
     public int PSYLevel => _psyLevel;
     public Transform PSYPranet { get; private set; }
@@ -23,8 +23,9 @@ public abstract class KinesisObjectBase : MonoBehaviour
         PSYPranet = pranet;
     }
 
-    public void SetOrder(OrderType newOrder)
+    public void SetOrder(OrderType newOrder , byte _skillid = 0)
     {
         Order = newOrder;
+        EffectSkill = _skillid;
     }
 }

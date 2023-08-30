@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 1897597080}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -786,7 +786,7 @@ MonoBehaviour:
     m_Bits: 1025
   _attackTargetLayer:
     serializedVersion: 2
-    m_Bits: 2097152
+    m_Bits: 2099200
   _keyboardskills:
   - name: PSYStop
     inputKey: 101
@@ -794,7 +794,10 @@ MonoBehaviour:
   - name: PSYExplosion
     inputKey: 102
     skill: {fileID: 11400000, guid: 48f8ef10056e71241bf340cbd40ac986, type: 2}
-  _mouseskills: []
+  _mouseskills:
+  - name: PSYStopSingle
+    inputKey: 323
+    skill: {fileID: 11400000, guid: 2313fe89e13a6304e82dde593a4cb75d, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

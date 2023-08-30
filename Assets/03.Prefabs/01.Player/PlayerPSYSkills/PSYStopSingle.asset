@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d9f33c0e243a04588aa0c46e4b833f, type: 3}
-  m_Name: PSYStop
+  m_Script: {fileID: 11500000, guid: ce31a1608ffbfe24caa146beb8b0dbd5, type: 3}
+  m_Name: PSYStopSingle
   m_EditorClassIdentifier: 
-  _id: 2
-  _psyLevel: 1
-  _psyMP: 3
-  _skillRange: 3
+  _id: 101
+  _psyLevel: 2
+  _psyMP: 1
