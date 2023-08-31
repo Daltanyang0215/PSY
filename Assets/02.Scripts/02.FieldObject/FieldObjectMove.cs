@@ -34,7 +34,7 @@ public class FieldObjectMove : FieldEventExecution
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>(); 
+        _rb = GetComponent<Rigidbody2D>();
         _prevPos = transform.position;
     }
 
@@ -46,8 +46,8 @@ public class FieldObjectMove : FieldEventExecution
             return;
         }
 
-        _moveVec = transform.position - _prevPos ;
-        _moveVec *= 1/Time.deltaTime;
+        _moveVec = transform.position - _prevPos;
+        _moveVec *= 1 / Time.deltaTime;
         _moveVec.y = 0;
         _prevPos = transform.position;
 
@@ -143,6 +143,15 @@ public class FieldObjectMove : FieldEventExecution
         if (collision.collider.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerMovement>().PlayerAddVelocity(_moveVec);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        for (int i = 0; i < _movePos.Length - 1; i++)
+        {
+            Gizmos.DrawLine(_movePos[i].movePos, _movePos[i + 1].movePos);
         }
     }
 }
