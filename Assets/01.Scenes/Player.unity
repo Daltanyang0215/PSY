@@ -783,7 +783,7 @@ MonoBehaviour:
   _spriteDefaultRight: 1
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 3073
   _attackTargetLayer:
     serializedVersion: 2
     m_Bits: 2099200

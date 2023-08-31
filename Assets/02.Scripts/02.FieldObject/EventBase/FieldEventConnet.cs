@@ -45,6 +45,24 @@ public class FieldEventConnet : MonoBehaviour
             }
         }
     }
+    private void OnDrawGizmos()
+    {
+
+        foreach (FieldEvent fieldEvent in _fieldEvents)
+        {
+        Gizmos.color = Color.cyan;
+            for (int i = 0; i < fieldEvent.buttons.Length-1; i++)
+            {
+                Gizmos.DrawLine(fieldEvent.buttons[i].transform.position, fieldEvent.buttons[i + 1].transform.position);
+            }
+            Gizmos.color = Color.blue;
+            for (int i = 0; i < fieldEvent.executionEvents.Length; i++)
+            {
+                Gizmos.DrawLine(fieldEvent.buttons[0].transform.position, fieldEvent.executionEvents[i].transform.position);
+            }
+        }
+
+    }
 }
 [Serializable]
 public class FieldEvent
