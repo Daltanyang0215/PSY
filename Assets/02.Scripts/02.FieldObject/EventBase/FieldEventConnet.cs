@@ -13,9 +13,9 @@ public class FieldEventConnet : MonoBehaviour
         {
             // 모든 버튼을 눌린상태인지 확인
             bool allButtonPress = true;
-            foreach (FieldPushButton button in fieldEvent.buttons)
+            foreach (FieldEventTrigger trigger in fieldEvent.triggers)
             {
-                if(button.isPressed == false) // 하나라도 안되면 캔슬
+                if(trigger.isPressed == false) // 하나라도 안되면 캔슬
                 {
                     allButtonPress = false;
                     break;
@@ -51,14 +51,14 @@ public class FieldEventConnet : MonoBehaviour
         foreach (FieldEvent fieldEvent in _fieldEvents)
         {
         Gizmos.color = Color.cyan;
-            for (int i = 0; i < fieldEvent.buttons.Length-1; i++)
+            for (int i = 0; i < fieldEvent.triggers.Length-1; i++)
             {
-                Gizmos.DrawLine(fieldEvent.buttons[i].transform.position, fieldEvent.buttons[i + 1].transform.position);
+                Gizmos.DrawLine(fieldEvent.triggers[i].transform.position, fieldEvent.triggers[i + 1].transform.position);
             }
             Gizmos.color = Color.blue;
             for (int i = 0; i < fieldEvent.executionEvents.Length; i++)
             {
-                Gizmos.DrawLine(fieldEvent.buttons[0].transform.position, fieldEvent.executionEvents[i].transform.position);
+                Gizmos.DrawLine(fieldEvent.triggers[0].transform.position, fieldEvent.executionEvents[i].transform.position);
             }
         }
 
@@ -68,7 +68,7 @@ public class FieldEventConnet : MonoBehaviour
 public class FieldEvent
 {
     [SerializeField]private string eventName;
-    public FieldPushButton[] buttons;
+    public FieldEventTrigger[] triggers;
     public FieldEventExecution[] executionEvents;
 }
 

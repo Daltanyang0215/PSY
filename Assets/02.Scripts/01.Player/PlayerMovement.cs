@@ -27,9 +27,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _isGround = CheckGround();
 
+        if (PlayerState.Instance.IsNotMove) return;
         PlayerMove();
         PlayerJump();
-
     }
 
     private void FixedUpdate()
@@ -82,7 +82,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerAddVelocity(Vector2 vector)
     {
-        Debug.Log(vector);
         _externalVec = vector;
     }
 }

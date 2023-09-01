@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class FieldPushButton : MonoBehaviour
+public class FieldPushButton : FieldEventTrigger
 {
-    public bool isPressed { get; private set; }
+    
 
     private enum PressType
     {
