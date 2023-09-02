@@ -33,7 +33,6 @@ public class FieldNPC : MonoBehaviour, IInteraction
             _interactionText.text = "";
             _talkIndex = 0;
         }
-
     }
 
     public void OnInteractionZoneEnter()

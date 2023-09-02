@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FieldEventConnet : MonoBehaviour
 {
-    [SerializeField] private FieldEvent[] _fieldEvents ;
+    [SerializeField] private FieldEvent[] _fieldEvents;
 
     private void LateUpdate()
     {
@@ -15,7 +15,7 @@ public class FieldEventConnet : MonoBehaviour
             bool allButtonPress = true;
             foreach (FieldEventTrigger trigger in fieldEvent.triggers)
             {
-                if(trigger.isPressed == false) // 하나라도 안되면 캔슬
+                if (trigger.isPressed == false) // 하나라도 안되면 캔슬
                 {
                     allButtonPress = false;
                     break;
@@ -25,9 +25,9 @@ public class FieldEventConnet : MonoBehaviour
             if (allButtonPress)
             {
                 // 이벤트 완료 실행
-                foreach(FieldEventExecution execution in fieldEvent.executionEvents)
+                foreach (FieldEventExecution execution in fieldEvent.executionEvents)
                 {
-                    if(execution.IsExecution == false)
+                    if (execution.IsExecution == false)
                     {
                         execution.OnEvnentExecution();
                     }
@@ -47,11 +47,12 @@ public class FieldEventConnet : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-
         foreach (FieldEvent fieldEvent in _fieldEvents)
         {
-        Gizmos.color = Color.cyan;
-            for (int i = 0; i < fieldEvent.triggers.Length-1; i++)
+            if (fieldEvent.triggers.Length == 0 || fieldEvent.executionEvents.Length == 0) return;
+
+            Gizmos.color = Color.cyan;
+            for (int i = 0; i < fieldEvent.triggers.Length - 1; i++)
             {
                 Gizmos.DrawLine(fieldEvent.triggers[i].transform.position, fieldEvent.triggers[i + 1].transform.position);
             }
@@ -61,13 +62,12 @@ public class FieldEventConnet : MonoBehaviour
                 Gizmos.DrawLine(fieldEvent.triggers[0].transform.position, fieldEvent.executionEvents[i].transform.position);
             }
         }
-
     }
 }
 [Serializable]
 public class FieldEvent
 {
-    [SerializeField]private string eventName;
+    [SerializeField] private string eventName;
     public FieldEventTrigger[] triggers;
     public FieldEventExecution[] executionEvents;
 }

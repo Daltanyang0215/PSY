@@ -29,13 +29,17 @@ public class FieldObjectMove : FieldEventExecution
     [SerializeField] private bool _isCancleReturn;
     private bool _pingpongCheck;
 
+    private Vector3 _startPos;
     private Vector3 _prevPos;
     private Vector3 _moveVec;
+
+    private float _waitTimer;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _prevPos = transform.position;
+        _prevPos = _startPos = transform.position;
+        _waitTimer = _movePos[0].movedelay;
     }
 
     private void FixedUpdate()
@@ -54,9 +58,9 @@ public class FieldObjectMove : FieldEventExecution
 
         if (IsExecution)
         {
-            if (Vector2.Distance(transform.position, _movePos[_movePointIndex].movePos) < 0.05f)
+            if (Vector2.Distance(transform.position, _startPos + _movePos[_movePointIndex].movePos) < 0.05f)
             {
-                _rb.position = _movePos[_movePointIndex].movePos;
+                _rb.position = _startPos + _movePos[_movePointIndex].movePos;
                 switch (_moveType)
                 {
                     case MoveType.Once:
@@ -80,6 +84,7 @@ public class FieldObjectMove : FieldEventExecution
                                 _pingpongCheck = true;
                             }
                         }
+                        _waitTimer = _movePos[_movePointIndex].movedelay;
                         break;
                     case MoveType.Loop:
                         _movePointIndex++;
@@ -87,18 +92,22 @@ public class FieldObjectMove : FieldEventExecution
                         {
                             _movePointIndex = 0;
                         }
+                        _waitTimer = _movePos[_movePointIndex].movedelay;
                         break;
                     default:
                         break;
                 }
             }
-            _rb.MovePosition(Vector2.MoveTowards(transform.position, _movePos[_movePointIndex].movePos, _movePos[_movePointIndex].moveSpeed * Time.fixedDeltaTime));
+            if (_waitTimer <= 0)
+                _rb.MovePosition(Vector2.MoveTowards(transform.position, _startPos + _movePos[_movePointIndex].movePos, _movePos[_movePointIndex].moveSpeed * Time.fixedDeltaTime));
+            else
+                _waitTimer -= Time.deltaTime;
         }
         else if (_isCancleReturn)
         {
-            if (Vector2.Distance(transform.position, _movePos[0].movePos) < 0.05f)
+            if (Vector2.Distance(transform.position, _startPos + _movePos[0].movePos) < 0.05f)
             {
-                _rb.position = _movePos[0].movePos;
+                _rb.position = _startPos + _movePos[0].movePos;
                 return;
             }
 
@@ -107,12 +116,12 @@ public class FieldObjectMove : FieldEventExecution
                 case MoveType.None:
                     break;
                 case MoveType.Once:
-                    _rb.MovePosition(Vector2.MoveTowards(transform.position, _movePos[0].movePos, _movePos[0].moveSpeed * Time.fixedDeltaTime));
+                    _rb.MovePosition(Vector2.MoveTowards(transform.position, _startPos + _movePos[0].movePos, _movePos[0].moveSpeed * Time.fixedDeltaTime));
                     break;
                 case MoveType.Pingpong:
                 case MoveType.Loop:
-                    _rb.MovePosition(Vector2.MoveTowards(transform.position, _movePos[_movePointIndex].movePos, _movePos[_movePointIndex].moveSpeed * Time.fixedDeltaTime));
-                    if (Vector2.Distance(transform.position, _movePos[_movePointIndex].movePos) < 0.05f)
+                    _rb.MovePosition(Vector2.MoveTowards(transform.position, _startPos + _movePos[_movePointIndex].movePos, _movePos[_movePointIndex].moveSpeed * Time.fixedDeltaTime));
+                    if (Vector2.Distance(transform.position, _startPos + _movePos[_movePointIndex].movePos) < 0.05f)
                         _movePointIndex--;
                     break;
                 default:
@@ -132,7 +141,11 @@ public class FieldObjectMove : FieldEventExecution
         base.OnEvnentCancle();
         if (_isCancleReturn) // 기존 위치로 돌아오는 오브젝트의 설정 초기화
         {
-            _pingpongCheck = false;
+            if (_pingpongCheck)
+            {
+                _pingpongCheck = false;
+                _movePointIndex++;
+            }
             if (_movePointIndex > 0)
                 _movePointIndex--;
         }
@@ -146,12 +159,18 @@ public class FieldObjectMove : FieldEventExecution
         }
     }
 
+    [ExecuteInEditMode]
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.magenta;
+        if (_startPos == Vector3.zero) _startPos = transform.position;
+
+
         for (int i = 0; i < _movePos.Length - 1; i++)
         {
-            Gizmos.DrawLine(_movePos[i].movePos, _movePos[i + 1].movePos);
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(_startPos + _movePos[i].movePos, _startPos + _movePos[i + 1].movePos);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(_startPos + _movePos[i + 1].movePos, transform.localScale);
         }
     }
 }
