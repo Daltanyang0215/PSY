@@ -164,6 +164,8 @@ public class FieldObjectMove : FieldEventExecution
     {
         if (_startPos == Vector3.zero) _startPos = transform.position;
 
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(_startPos, transform.localScale);
 
         for (int i = 0; i < _movePos.Length - 1; i++)
         {

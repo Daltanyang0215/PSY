@@ -798,6 +798,9 @@ MonoBehaviour:
   - name: PSYStopSingle
     inputKey: 323
     skill: {fileID: 11400000, guid: 2313fe89e13a6304e82dde593a4cb75d, type: 2}
+  - name: PSYGrap
+    inputKey: 324
+    skill: {fileID: 11400000, guid: bacc82cc99a91ff48a4fdf67e28f442b, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

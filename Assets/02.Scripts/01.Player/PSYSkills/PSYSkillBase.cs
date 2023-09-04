@@ -11,6 +11,8 @@ public abstract class PSYSkillBase : ScriptableObject, IPSYSkill
     public int PSYLevel => _psyLevel;
     [SerializeField] private int _psyMP;
     public int PSYMP => _psyMP;
+    [SerializeField] private bool _isMPClip;
+    public bool IsMPClip => _isMPClip;
 
     public bool IsActive { get; protected set; }
 

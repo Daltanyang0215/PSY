@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerAttack))]
 public class PlayerState : MonoBehaviour, IHitAction
 {
     private static PlayerState instance;
@@ -81,27 +83,18 @@ public class PlayerState : MonoBehaviour, IHitAction
         _mpRecTimer -= Time.deltaTime;
     }
 
-    public bool CheckMpPoint(int usingMP)
+    public bool CheckMpPoint(int usingMP, bool clipMP = false)
     {
         if (usingMP <= _mp)
         {
             _mp -= usingMP;
-
             _mpRecTimer = _mpRecoveryPerStartSec;
 
-            MpClamp();
-            return true;
-        }
-        return false;
-    }
-
-    public bool CheckClipMpPoint(int usingMP)
-    {
-        if (usingMP <= _mp && CheckMpPoint(usingMP))
-        {
-            _clipmp += usingMP;
-
-            if (_clipmp < 0) _clipmp = 0;
+            if (clipMP)
+            {
+                _clipmp += usingMP;
+                if (_clipmp < 0) _clipmp = 0;
+            }
 
             MpClamp();
             return true;

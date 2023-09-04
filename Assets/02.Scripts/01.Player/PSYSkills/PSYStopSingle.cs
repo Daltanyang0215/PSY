@@ -25,14 +25,14 @@ public class PSYStopSingle : PSYSkillBase
                 if (_activeKineses.Contains(target))
                 {
                     // 있다면 해제
-                    PlayerState.Instance.CheckClipMpPoint(-PSYMP);
+                    PlayerState.Instance.CheckMpPoint(-PSYMP, IsMPClip);
                     target.StopPSYForce();
                     _activeKineses.Remove(target);
                 }
                 else
                 {
                     // 없다면 지정
-                    if (PlayerState.Instance.CheckClipMpPoint(PSYMP))
+                    if (PlayerState.Instance.CheckMpPoint(PSYMP, IsMPClip))
                     {
                         target.StopPSYForce(true);
                         target.SetOrder(OrderType.Player, PSYID);
@@ -52,7 +52,7 @@ public class PSYStopSingle : PSYSkillBase
         {
             if (_activeKineses[i] == null || _activeKineses[i].EffectSkill != PSYID)
             {
-                PlayerState.Instance.CheckClipMpPoint(-PSYMP);
+                PlayerState.Instance.CheckMpPoint(-PSYMP, IsMPClip);
                 _activeKineses.RemoveAt(i);
             }
         }
