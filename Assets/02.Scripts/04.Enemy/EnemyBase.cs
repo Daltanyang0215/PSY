@@ -9,15 +9,21 @@ public class EnemyBase : MonoBehaviour, IHitAction
 
     [SerializeField] protected int _curHP;
 
-
+    public bool IsLive {  get; private set; }
+    
+    private GameObject _renderer;
+    private CircleCollider2D _collider;
     public OrderType Order { get; protected set; }
 
 
     protected virtual void Start()
     {
+        IsLive = true;
         Order = OrderType.Enemy;
 
         _curHP = state.HP;
+        _renderer = transform.GetComponentInChildren<SpriteRenderer>().gameObject;
+        _collider = GetComponent<CircleCollider2D>();
     }
 
 
@@ -27,7 +33,7 @@ public class EnemyBase : MonoBehaviour, IHitAction
         {
             _curHP -= damage;
 
-            if (_curHP < 0)
+            if (_curHP <= 0)
             {
                 OnDie();
             }
@@ -37,7 +43,9 @@ public class EnemyBase : MonoBehaviour, IHitAction
     protected virtual void OnDie()
     {
         Debug.Log("EnemyDie");
-        gameObject.SetActive(false);
+        _renderer.SetActive(false);
+        _collider.enabled = false;
+        IsLive = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

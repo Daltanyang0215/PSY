@@ -17,6 +17,11 @@ public class PlayerAttack : MonoBehaviour
         _camera = Camera.main;
         _skillKeyboardSets = PlayerState.Instance.SkillKeySets;
         _skillMouseSets = PlayerState.Instance.SkillsMouseSets;
+
+        foreach (PSYSkillKeySet skillSet in _skillKeyboardSets)
+            skillSet.skill.OnPSYInit();
+        foreach (PSYSkillKeySet skillSet in _skillMouseSets)
+            skillSet.skill.OnPSYInit();
     }
 
     private void Update()

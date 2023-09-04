@@ -45,6 +45,8 @@ public class FieldEventConnet : MonoBehaviour
             }
         }
     }
+
+    [ExecuteInEditMode]
     private void OnDrawGizmos()
     {
         foreach (FieldEvent fieldEvent in _fieldEvents)

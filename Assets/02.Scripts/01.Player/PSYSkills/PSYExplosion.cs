@@ -19,14 +19,16 @@ public class PSYExplosion : PSYSkillBase
         {
             if (kineses.TryGetComponent(out target))
             {
-                target.SetOrder(OrderType.Player,PSYID);
+                target.SetOrder(OrderType.Player, PSYID);
                 target.AddPSYForce((kineses.transform.position - point).normalized * PlayerState.Instance.PsyLevel * _skillMut);
             }
         }
     }
+    public override void OnPSYInit() { }
     public override void OnPSYUpdate(Vector3 point, LayerMask targetlayer) { }
 
     public override void OnPSYExit(Vector3 point, LayerMask targetlayer) { }
 
     public override void OnPSYEngineUpdate(Vector3 point, LayerMask targetlayer) { }
+
 }

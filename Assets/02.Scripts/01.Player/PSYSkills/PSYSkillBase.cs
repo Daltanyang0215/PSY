@@ -16,6 +16,7 @@ public abstract class PSYSkillBase : ScriptableObject, IPSYSkill
 
     public bool IsActive { get; protected set; }
 
+    public abstract void OnPSYInit();
     public abstract void OnPSYEnter(Vector3 point, LayerMask targetlayer);
 
     public abstract void OnPSYUpdate(Vector3 point, LayerMask targetlayer);

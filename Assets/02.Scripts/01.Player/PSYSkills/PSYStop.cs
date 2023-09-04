@@ -30,7 +30,7 @@ public class PSYStop : PSYSkillBase
             if (kineses.TryGetComponent(out target))
             {
                 target.StopPSYForce(true);
-                target.SetOrder(OrderType.Player,PSYID);
+                target.SetOrder(OrderType.Player, PSYID);
                 _prevKineses.Add(target);
             }
         }
@@ -100,4 +100,6 @@ public class PSYStop : PSYSkillBase
     }
 
     public override void OnPSYEngineUpdate(Vector3 point, LayerMask targetlayer) { }
+
+    public override void OnPSYInit() { }
 }

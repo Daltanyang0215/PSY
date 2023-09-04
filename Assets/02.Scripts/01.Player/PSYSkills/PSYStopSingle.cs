@@ -8,7 +8,10 @@ public class PSYStopSingle : PSYSkillBase
     //[SerializeField] private float _skillRange;
     private List<KinesisObjectBase> _activeKineses = new List<KinesisObjectBase>();
 
-
+    public override void OnPSYInit()
+    {
+        _activeKineses.Clear();
+    }
     public override void OnPSYEnter(Vector3 point, LayerMask targetlayer)
     {
         Collider2D kineseTargets = Physics2D.OverlapCircle(point, 0.1f, targetlayer);
@@ -57,4 +60,6 @@ public class PSYStopSingle : PSYSkillBase
             }
         }
     }
+
+   
 }
