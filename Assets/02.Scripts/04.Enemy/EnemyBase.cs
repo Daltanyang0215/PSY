@@ -26,6 +26,7 @@ public class EnemyBase : MonoBehaviour, IHitAction
         _collider = GetComponent<CircleCollider2D>();
     }
 
+    protected virtual void Update() { }
 
     public virtual void OnHit(int damage)
     {

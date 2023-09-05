@@ -56,12 +56,14 @@ public class FieldEventConnet : MonoBehaviour
             Gizmos.color = Color.cyan;
             for (int i = 0; i < fieldEvent.triggers.Length - 1; i++)
             {
-                Gizmos.DrawLine(fieldEvent.triggers[i].transform.position, fieldEvent.triggers[i + 1].transform.position);
+                if (fieldEvent.triggers[i] != null)
+                    Gizmos.DrawLine(fieldEvent.triggers[i].transform.position, fieldEvent.triggers[i + 1].transform.position);
             }
             Gizmos.color = Color.blue;
             for (int i = 0; i < fieldEvent.executionEvents.Length; i++)
             {
-                Gizmos.DrawLine(fieldEvent.triggers[0].transform.position, fieldEvent.executionEvents[i].transform.position);
+                if (fieldEvent.executionEvents[i] != null)
+                    Gizmos.DrawLine(fieldEvent.triggers[0].transform.position, fieldEvent.executionEvents[i].transform.position);
             }
         }
     }

@@ -159,11 +159,15 @@ public class FieldObjectMove : FieldEventExecution
         }
     }
 
-    [ExecuteAlways]
+    [ContextMenu("GizmoReset")]
+    void StartPosReset()
+    {
+        _startPos = transform.position;
+    }
+
     private void OnDrawGizmos()
     {
-        if (_startPos == Vector3.zero) 
-            _startPos = transform.position;
+        if(_startPos == Vector3.zero) _startPos = transform.position;
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(_startPos, transform.localScale);

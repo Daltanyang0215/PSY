@@ -8,15 +8,14 @@ public class TestBullet : KinesisObjectBase
     [SerializeField] private Vector2 _moveVec;
     [SerializeField] private int damage;
 
-
-    private void Start()
+    private void Awake()
     {
         if (!TryGetComponent(out _rb))
         {
             _rb = gameObject.AddComponent<Rigidbody2D>();
         }
 
-        _rb.AddForce(_moveVec, ForceMode2D.Impulse);
+        SetPSYForce(_moveVec);
     }
 
     private void Update()
@@ -27,18 +26,26 @@ public class TestBullet : KinesisObjectBase
         }
     }
 
-    public override void AddPSYForce(Vector2 vector)
+    public override void SetPSYForce(Vector2 vector)
     {
         //MoveVec += vector;
         _rb.drag = 0;
         _rb.gravityScale = 0;
         _rb.velocity = Vector2.zero;
+        transform.right = vector;
+        _rb.AddForce(vector, ForceMode2D.Impulse);
+    }
+    public override void AddPSYForce(Vector2 vector)
+    {
+        _rb.drag = 0;
+        _rb.gravityScale = 0.5f;
+        transform.right = transform.right + (Vector3)vector;
         _rb.AddForce(vector, ForceMode2D.Impulse);
     }
     public override void StopPSYForce(bool notGravite = false)
     {
         //MoveVec = Vector2.zero;
-        if (PSYLevel == 0)
+        if (PSYLevel == 0 || PSYLevel <= PlayerState.Instance.PsyLevel)
         {
             _rb.velocity = Vector2.zero;
 
@@ -85,5 +92,5 @@ public class TestBullet : KinesisObjectBase
         }
     }
 
-
+    
 }

@@ -10,4 +10,7 @@ public class EnemyStateData : ScriptableObject
 
     [SerializeField] private float _moveSpeed;
     public float MoveSpeed => _moveSpeed;
+
+    [SerializeField] private float _attackCool;
+    public float AttackCool => _attackCool;
 }

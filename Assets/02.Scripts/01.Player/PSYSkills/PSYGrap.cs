@@ -33,7 +33,7 @@ public class PSYGrap : PSYSkillBase
         {
             PlayerState.Instance.CheckMpPoint(-PSYMP, IsMPClip);
             kinesisObjects[0].SetPSYPranet(null);
-            kinesisObjects[0].AddPSYForce((point - (PlayerState.Instance.transform.position + Vector3.up)).normalized * PSYLevel * _psyPowerMut);
+            kinesisObjects[0].SetPSYForce((point - (PlayerState.Instance.transform.position + Vector3.up)).normalized * PSYLevel * _psyPowerMut);
             kinesisObjects.RemoveAt(0);
         }
     }

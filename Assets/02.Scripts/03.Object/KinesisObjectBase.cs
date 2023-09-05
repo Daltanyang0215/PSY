@@ -16,6 +16,7 @@ public abstract class KinesisObjectBase : MonoBehaviour
     public int PSYLevel => _psyLevel;
     public Transform PSYPranet { get; private set; }
 
+    public abstract void SetPSYForce(Vector2 vector);
     public abstract void AddPSYForce(Vector2 vector);
     public abstract void StopPSYForce(bool notGravite = false);
     public void SetPSYPranet(Transform pranet)
