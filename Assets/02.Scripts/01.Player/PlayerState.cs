@@ -114,7 +114,11 @@ public class PlayerState : MonoBehaviour, IHitAction
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (Physics2D.OverlapBox(transform.position + (Vector3.up * _playerSize.y * 0.5f), _playerSize, 0,AttackTargetLayer).TryGetComponent(out IInteraction interaction))
+            if(GameManager.Instance.CurTalkNPC != null)
+            {
+                GameManager.Instance.CurTalkNPC.OnInteraction();
+            }
+            else if (Physics2D.OverlapBox(transform.position + (Vector3.up * _playerSize.y * 0.5f), _playerSize, 0,AttackTargetLayer).TryGetComponent(out IInteraction interaction))
             {
                 interaction.OnInteraction();
             }

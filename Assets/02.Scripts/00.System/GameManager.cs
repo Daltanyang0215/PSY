@@ -21,5 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private NPCTalkDatabase talkDatabase;
     public NPCTalkDatabase TalkDatabase => talkDatabase;
 
+    public FieldNPC CurTalkNPC { get; set; }
     
 }

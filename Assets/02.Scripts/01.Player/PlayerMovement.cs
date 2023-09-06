@@ -34,8 +34,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (PlayerState.Instance.IsNotMove) _moveVec = Vector2.zero;
         _rb.velocity = _moveVec * PlayerState.Instance.MoveSpeed + Vector2.up * _rb.velocity.y + _externalVec;
-        _externalVec = Vector2.Lerp(_externalVec, Vector2.zero, Time.fixedDeltaTime*3);
+        _externalVec = Vector2.Lerp(_externalVec, Vector2.zero, Time.fixedDeltaTime * 3);
     }
 
     private bool CheckGround()

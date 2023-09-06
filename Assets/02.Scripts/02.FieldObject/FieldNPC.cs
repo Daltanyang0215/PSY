@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class FieldNPC : MonoBehaviour, IInteraction
+public class FieldNPC : FieldEventExecution, IInteraction
 {
     public bool IsCanInteraction { get; protected set; }
 
@@ -16,19 +16,30 @@ public class FieldNPC : MonoBehaviour, IInteraction
     private void Start()
     {
         _interactionText = GetComponentInChildren<TMP_Text>(true);
+        IsCanInteraction = true;
+    }
+
+    public override void OnEvnentExecution()
+    {
+        base.OnEvnentExecution();
+        OnInteraction();
     }
 
     public void OnInteraction()
     {
+        if (!IsCanInteraction) return;
+
         _talkElement = GameManager.Instance.TalkDatabase.GetTalk(_talkID, _talkIndex);
         if (_talkElement != null)
         {
+            GameManager.Instance.CurTalkNPC = this;
             PlayerState.Instance.OnPlayerStop(true);
             _interactionText.text = _talkElement.talk;
             _talkIndex++;
         }
         else
         {
+            GameManager.Instance.CurTalkNPC = null;
             PlayerState.Instance.OnPlayerStop(false);
             _interactionText.text = "";
             _talkIndex = 0;
