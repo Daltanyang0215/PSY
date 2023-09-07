@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 2
   _psyLevel: 1
-  _psyMP: 3
+  _psyMP: 1
+  _isMPClip: 0
   _skillRange: 3

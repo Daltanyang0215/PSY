@@ -32,7 +32,7 @@ public class EnemyGun : EnemyBase
     {
         TestBullet bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
         bullet.SetOrder(OrderType.Enemy);
-        bullet.SetPSYForce((PlayerState.Instance.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0f, 1f)) - transform.position).normalized * 10);
+        bullet.SetPSYForce((PlayerState.Instance.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0f, 1f)) - transform.position).normalized * state.BulletSpeed);
 
         _attackTimer = state.AttackCool;
     }

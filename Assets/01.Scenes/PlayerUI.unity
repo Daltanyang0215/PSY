@@ -323,10 +323,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UI Test
+  m_text: "\uD3F0\uD2B8 \uD14C\uC2A4\uD2B8\nFont Test"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e2206d40e1bbd1243b4bb1e73f7bfe27, type: 2}
-  m_sharedMaterial: {fileID: -4285515969004787456, guid: e2206d40e1bbd1243b4bb1e73f7bfe27, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c4ce9c5ca9d59cc4e8e5a808f73d5f50, type: 2}
+  m_sharedMaterial: {fileID: 2056021329615118801, guid: c4ce9c5ca9d59cc4e8e5a808f73d5f50, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

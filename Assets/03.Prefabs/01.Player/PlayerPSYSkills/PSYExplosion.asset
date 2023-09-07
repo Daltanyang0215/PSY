@@ -15,5 +15,7 @@ MonoBehaviour:
   _id: 1
   _psyLevel: 1
   _psyMP: 2
+  _isMPClip: 0
   _skillRange: 3
-  _skillMut: 5
+  _skillMut: 3
+  _UpdataMut: 0.1

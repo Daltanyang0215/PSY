@@ -8,9 +8,12 @@ public class PSYExplosion : PSYSkillBase
 {
     [SerializeField] private float _skillRange;
     [SerializeField] private float _skillMut;
+    [SerializeField] private float _UpdataMut;
+
+    public override void OnPSYInit() { }
     public override void OnPSYEnter(Vector3 point, LayerMask targetlayer)
     {
-        if (!PlayerState.Instance.CheckMpPoint(PSYMP,true)) return;
+        if (!PlayerState.Instance.CheckMpPoint(PSYMP, true)) return;
         IsActive = true;
 
         //Collider2D[] kineseTargets = Physics2D.OverlapCircleAll(point, _skillRange, targetlayer);
@@ -25,11 +28,11 @@ public class PSYExplosion : PSYSkillBase
         //    }
         //}
     }
-    public override void OnPSYInit() { }
+   
     public override void OnPSYUpdate(Vector3 point, LayerMask targetlayer)
     {
         if (!IsActive) return;
-        
+
         Collider2D[] kineseTargets = Physics2D.OverlapCircleAll(point, _skillRange, targetlayer);
 
         KinesisObjectBase target = null;
@@ -38,12 +41,13 @@ public class PSYExplosion : PSYSkillBase
             if (kineses.TryGetComponent(out target))
             {
                 target.SetOrder(OrderType.Player, PSYID);
-                target.AddPSYForce((kineses.transform.position+Vector3.up - point).normalized * PlayerState.Instance.PsyLevel * _skillMut*0.02f);
+                target.AddPSYForce((kineses.transform.position + Vector3.up - point).normalized * PlayerState.Instance.PsyLevel * _skillMut * _UpdataMut);
             }
         }
     }
 
-    public override void OnPSYExit(Vector3 point, LayerMask targetlayer) {
+    public override void OnPSYExit(Vector3 point, LayerMask targetlayer)
+    {
         if (IsActive)
         {
             IsActive = false;
