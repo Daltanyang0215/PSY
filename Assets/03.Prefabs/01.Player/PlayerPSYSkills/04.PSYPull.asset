@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eee354730591e74a9f3954e397f43e9, type: 3}
-  m_Name: PSYGrap
+  m_Script: {fileID: 11500000, guid: 713f10615f390824e9c32bdc80444946, type: 3}
+  m_Name: 04.PSYPull
   m_EditorClassIdentifier: 
-  _id: 3
+  _id: 4
   _psyLevel: 1
   _psyMP: 1
   _isMPClip: 1
-  _psyPowerMut: 10
+  _skillMut: 1

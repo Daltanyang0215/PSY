@@ -795,12 +795,12 @@ MonoBehaviour:
     inputKey: 102
     skill: {fileID: 11400000, guid: 48f8ef10056e71241bf340cbd40ac986, type: 2}
   _mouseskills:
-  - name: PSYStopSingle
+  - name: MouseLeft
     inputKey: 323
-    skill: {fileID: 11400000, guid: 2313fe89e13a6304e82dde593a4cb75d, type: 2}
-  - name: PSYGrap
+    skill: {fileID: 11400000, guid: 998ca08268a98a1418554da4e1d54409, type: 2}
+  - name: MouseRight
     inputKey: 324
-    skill: {fileID: 11400000, guid: bacc82cc99a91ff48a4fdf67e28f442b, type: 2}
+    skill: {fileID: 11400000, guid: c303b1e63545cf1438acad8e6efc2579, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

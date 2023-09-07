@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[CreateAssetMenu(fileName = "PSYPull", menuName = "PSYSkill/PSYPull")]
 
 public class PSYPull : PSYSkillBase
 {
@@ -25,21 +26,27 @@ public class PSYPull : PSYSkillBase
     public override void OnPSYUpdate(Vector3 point, LayerMask targetlayer)
     {
         if (!IsActive) return;
-        target.AddPSYForce((target.transform.position + Vector3.up - point).normalized * PlayerState.Instance.PsyLevel * _skillMut);
+
+        if (target == null)
+        {
+            target.PSYCancle();
+            PlayerState.Instance.CheckMpPoint(-PSYMP, IsMPClip);
+            IsActive = false;
+            return;
+        }
+
+        target.SetPSYForce((PlayerState.Instance.transform.position + Vector3.up - target.transform.position).normalized * PlayerState.Instance.PsyLevel * _skillMut);
     }
 
     public override void OnPSYExit(Vector3 point, LayerMask targetlayer)
     {
         if (!IsActive) return;
-
         PlayerState.Instance.CheckMpPoint(-PSYMP, IsMPClip);
+        target.PSYCancle();
         IsActive = false;
         target = null;
     }
 
 
-    public override void OnPSYEngineUpdate(Vector3 point, LayerMask targetlayer)
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void OnPSYEngineUpdate(Vector3 point, LayerMask targetlayer) { }
 }

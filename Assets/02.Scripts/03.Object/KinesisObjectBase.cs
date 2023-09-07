@@ -19,6 +19,7 @@ public abstract class KinesisObjectBase : MonoBehaviour
     public abstract void SetPSYForce(Vector2 vector);
     public abstract void AddPSYForce(Vector2 vector);
     public abstract void StopPSYForce(bool notGravite = false);
+    public abstract void PSYCancle(bool notGravite = false);
     public void SetPSYPranet(Transform pranet)
     {
         PSYPranet = pranet;
