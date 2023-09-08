@@ -23,7 +23,7 @@ public class KinesisObject : KinesisObjectBase
         //_rb.AddForce(vector);
         vector = PSYLevel <= 0 ? vector : vector / PSYLevel;
 
-        _rb.velocity = vector + Vector2.down * 0.5f;
+        _rb.velocity = vector;
     }
     public override void AddPSYForce(Vector2 vector)
     {

@@ -29,6 +29,12 @@ public class FieldEventConnet : MonoBehaviour
                 {
                     if (execution.IsExecution == false)
                     {
+                        if (fieldEvent.isOnce && fieldEvent.isAction == true)
+                        {
+                            return;
+                        }
+
+                        fieldEvent.isAction = true;
                         execution.OnEvnentExecution();
                     }
                 }
@@ -39,6 +45,10 @@ public class FieldEventConnet : MonoBehaviour
                 {
                     if (execution.IsExecution == true)
                     {
+                        if (!fieldEvent.isOnce)
+                            fieldEvent.isAction = false;
+
+
                         execution.OnEvnentCancle();
                     }
                 }
@@ -72,6 +82,8 @@ public class FieldEventConnet : MonoBehaviour
 public class FieldEvent
 {
     [SerializeField] private string eventName;
+    public bool isOnce;
+    [HideInInspector] public bool isAction;
     public FieldEventTrigger[] triggers;
     public FieldEventExecution[] executionEvents;
 }

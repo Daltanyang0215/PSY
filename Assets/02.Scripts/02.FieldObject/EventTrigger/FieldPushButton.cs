@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class FieldPushButton : FieldEventTrigger
 {
-    
-
     private enum PressType
     {
         None,
@@ -62,6 +60,7 @@ public class FieldPushButton : FieldEventTrigger
                     break;
             }
         }
+        _animator?.SetBool("OnPress", isPressed);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -91,5 +90,6 @@ public class FieldPushButton : FieldEventTrigger
                     break;
             }
         }
+        _animator?.SetBool("OnPress", isPressed);
     }
 }

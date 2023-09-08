@@ -29,7 +29,6 @@ public class PSYPull : PSYSkillBase
 
         if (target == null)
         {
-            target.PSYCancle();
             PlayerState.Instance.CheckMpPoint(-PSYMP, IsMPClip);
             IsActive = false;
             return;

@@ -12,10 +12,16 @@ public class FieldNPC : FieldEventExecution, IInteraction
     private TalkElement _talkElement;
 
     private TMP_Text _interactionText;
+    private TMP_Text _nextText;
 
     private void Start()
     {
         _interactionText = GetComponentInChildren<TMP_Text>(true);
+        _interactionText.text = "";
+
+        _nextText = _interactionText.transform.parent.Find("NextPage").GetComponent<TMP_Text>();
+        _nextText.enabled = false;
+                                
         IsCanInteraction = true;
     }
 
@@ -35,6 +41,7 @@ public class FieldNPC : FieldEventExecution, IInteraction
             GameManager.Instance.CurTalkNPC = this;
             PlayerState.Instance.OnPlayerStop(true);
             _interactionText.text = _talkElement.talk;
+            _nextText.enabled = true;
             _talkIndex++;
         }
         else
@@ -42,6 +49,7 @@ public class FieldNPC : FieldEventExecution, IInteraction
             GameManager.Instance.CurTalkNPC = null;
             PlayerState.Instance.OnPlayerStop(false);
             _interactionText.text = "";
+            _nextText.enabled = false;
             _talkIndex = 0;
         }
     }
