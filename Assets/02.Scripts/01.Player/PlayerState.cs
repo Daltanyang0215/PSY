@@ -43,6 +43,10 @@ public class PlayerState : MonoBehaviour, IHitAction
     public float MoveSpeed => _moveSpeed;
     [SerializeField] private float _jumpPower;
     public float JumpPower => _jumpPower;
+    [SerializeField] private float _dashRange;
+    public float DashRange => _dashRange;   
+    [SerializeField] private float _dashDelay;
+    public float DashDelay => _dashDelay;
     [SerializeField] private bool _spriteDefaultRight;
     public bool SpriteDefaultRight => _spriteDefaultRight;
     [SerializeField] private LayerMask _groundLayer;

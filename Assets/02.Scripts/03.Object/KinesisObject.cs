@@ -6,6 +6,8 @@ public class KinesisObject : KinesisObjectBase
 {
     private Rigidbody2D _rb;
 
+    public override Vector3 GetVelocity => _rb.velocity;
+
     private void Awake()
     {
         if (!TryGetComponent(out _rb))
@@ -63,8 +65,15 @@ public class KinesisObject : KinesisObjectBase
     }
     public override void PSYCancle(bool notGravite = false)
     {
-        _rb.drag = 0;
-        _rb.gravityScale = 0.5f;
+        if (notGravite)
+        {
+            _rb.gravityScale = 0;
+        }
+        else
+        {
+            _rb.drag = 0;
+            _rb.gravityScale = 1;
+        }
     }
 
 }

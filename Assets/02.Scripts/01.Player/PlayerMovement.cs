@@ -9,11 +9,18 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveVec;
     private float _inputX;
 
+    private bool _islongJump;
+    private bool _canJump;
+
     private bool _isGround;
     private RaycastHit2D _rayHit;
     private Vector2 _rayBoxSize;
 
     private Vector2 _externalVec;
+
+    private float _dashTimer;
+
+    private Collider2D _platform;
 
     private void Start()
     {
@@ -21,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
         _playerSprite = GetComponentInChildren<SpriteRenderer>();
         _rayBoxSize = GetComponent<BoxCollider2D>().size * 0.95f;
         _rayBoxSize.y = 0.1f;
+        _dashTimer = PlayerState.Instance.DashDelay;
+        _canJump = true;
     }
 
     private void Update()
@@ -29,7 +38,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (PlayerState.Instance.IsNotMove) return;
         PlayerMove();
+        PlayerDash();
         PlayerJump();
+        PlayerDownJump();
     }
 
     private void FixedUpdate()
@@ -41,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CheckGround()
     {
+
         return Physics2D.OverlapBox(transform.position, _rayBoxSize, 0, PlayerState.Instance.GroundLayer);
     }
 
@@ -65,14 +77,62 @@ public class PlayerMovement : MonoBehaviour
             _moveVec = Vector2.right * _inputX;
         }
     }
-
+    private void PlayerDash()
+    {
+        _dashTimer -= Time.deltaTime;
+        if (Input.GetButtonDown("Dash") && _dashTimer < 0)
+        {
+            _inputX = Input.GetAxisRaw("Horizontal");
+            if (_inputX != 0)
+            {
+                //_rb.MovePosition(transform.position + Vector3.right * _inputX * PlayerState.Instance.DashRange);
+                _externalVec += Vector2.right * _inputX * PlayerState.Instance.DashRange;
+                _dashTimer = PlayerState.Instance.DashDelay;
+            }
+        }
+    }
     private void PlayerJump()
     {
-        if (!_isGround) return;
-        if (Input.GetButtonDown("Jump"))
+        // 점프력 조절을 중력으로 함 낙하하기 전에 점프를 떼면 중력을 높여 빨리 떨어지게 함
+        if (Input.GetButtonUp("Jump") && _rb.velocity.y > 0f)
         {
+            _rb.gravityScale = 6;
+        }
+        if(_rb.velocity.y < 0.1f)
+        {
+            _rb.gravityScale = 2;
+        }
+
+        if (_isGround) _rb.gravityScale = 2;
+        else return;
+
+        if (Input.GetButtonDown("Jump") && _canJump)
+        {
+            _islongJump = true;
+            _rb.gravityScale = 2;
             _rb.AddForce(Vector2.up * PlayerState.Instance.JumpPower, ForceMode2D.Impulse);
         }
+    }
+    private void PlayerDownJump()
+    {
+        if (!_isGround) return;
+        if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") < 0)
+        {
+            _platform = Physics2D.OverlapBox(transform.position, _rayBoxSize, 0, 1 << LayerMask.NameToLayer("Platform"));
+            if (_platform != null)
+            {
+                Physics2D.IgnoreCollision(PlayerState.Instance.GetComponent<Collider2D>(), _platform, true);
+                _rb.AddForce(Vector2.down * PlayerState.Instance.JumpPower * 0.1f, ForceMode2D.Impulse);
+                _canJump = false;
+                Invoke("IgnoreCancle", 0.5f);
+            }
+        }
+    }
+    private void IgnoreCancle()
+    {
+        if (_platform == null) return;
+        _canJump = true;
+        Physics2D.IgnoreCollision(PlayerState.Instance.GetComponent<Collider2D>(), _platform, false);
     }
 
     private void OnDrawGizmosSelected()

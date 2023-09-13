@@ -18,10 +18,7 @@ public abstract class PSYSkillBase : ScriptableObject, IPSYSkill
 
     public abstract void OnPSYInit();
     public abstract void OnPSYEnter(Vector3 point, LayerMask targetlayer);
-
     public abstract void OnPSYUpdate(Vector3 point, LayerMask targetlayer);
-
     public abstract void OnPSYExit(Vector3 point, LayerMask targetlayer);
-
     public abstract void OnPSYEngineUpdate(Vector3 point, LayerMask targetlayer);
 }

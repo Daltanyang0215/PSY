@@ -8,6 +8,8 @@ public class TestBullet : KinesisObjectBase
     [SerializeField] private Vector2 _moveVec;
     [SerializeField] private int damage;
 
+    public override Vector3 GetVelocity => _rb.velocity;
+
     private void Awake()
     {
         if (!TryGetComponent(out _rb))
@@ -39,8 +41,8 @@ public class TestBullet : KinesisObjectBase
     {
         _rb.drag = 0;
         _rb.gravityScale = 0.5f;
-        transform.right = transform.right + (Vector3)vector;
         _rb.AddForce(vector, ForceMode2D.Impulse);
+        transform.right = _rb.velocity;
     }
     public override void StopPSYForce(bool notGravite = false)
     {
@@ -74,8 +76,15 @@ public class TestBullet : KinesisObjectBase
 
     public override void PSYCancle(bool notGravite = false)
     {
-        _rb.drag = 0;
-        _rb.gravityScale = 0.5f;
+        if (notGravite)
+        {
+            _rb.gravityScale = 0;
+        }
+        else
+        {
+            _rb.drag = 0;
+            _rb.gravityScale = 0.5f;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

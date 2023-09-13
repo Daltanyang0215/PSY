@@ -8,13 +8,22 @@ public enum OrderType
     Player,
     Enemy
 }
+public enum KinesisObjectType
+{
+    None,
+    Bullet
+}
 public abstract class KinesisObjectBase : MonoBehaviour
 {
     public OrderType Order { get; private set; }
+    [SerializeField] KinesisObjectType _obejctType;
+    public KinesisObjectType ObjectType => _obejctType;
     public byte EffectSkill { get; private set; }
     [SerializeField] private int _psyLevel;
     public int PSYLevel => _psyLevel;
     public Transform PSYPranet { get; private set; }
+
+    public abstract Vector3 GetVelocity { get;}
 
     public abstract void SetPSYForce(Vector2 vector);
     public abstract void AddPSYForce(Vector2 vector);
