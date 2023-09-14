@@ -912,7 +912,7 @@ MonoBehaviour:
     skill: {fileID: 11400000, guid: 43029e695ccf29248a67ad53b15cb23a, type: 2}
   - name: PSYExplosion
     inputKey: 102
-    skill: {fileID: 11400000, guid: e873a098ad08b8a4db04efcfe8098df8, type: 2}
+    skill: {fileID: 11400000, guid: 48f8ef10056e71241bf340cbd40ac986, type: 2}
   - name: Acc
     inputKey: 122
     skill: {fileID: 11400000, guid: 4fa66640cd667e24a908bc8e89eff565, type: 2}

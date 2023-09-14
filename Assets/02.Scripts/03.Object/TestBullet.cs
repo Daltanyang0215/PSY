@@ -28,7 +28,7 @@ public class TestBullet : KinesisObjectBase
         }
     }
 
-    public override void SetPSYForce(Vector2 vector)
+    public override void SetPSYForce(Vector2 vector, ForceMode2D mode = ForceMode2D.Impulse)
     {
         //MoveVec += vector;
         _rb.drag = 0;
@@ -37,7 +37,7 @@ public class TestBullet : KinesisObjectBase
         transform.right = vector;
         _rb.AddForce(vector, ForceMode2D.Impulse);
     }
-    public override void AddPSYForce(Vector2 vector)
+    public override void AddPSYForce(Vector2 vector,ForceMode2D mode = ForceMode2D.Impulse)
     {
         _rb.drag = 0;
         _rb.gravityScale = 0.5f;

@@ -16,7 +16,7 @@ public class KinesisObject : KinesisObjectBase
         }
     }
 
-    public override void SetPSYForce(Vector2 vector)
+    public override void SetPSYForce(Vector2 vector, ForceMode2D mode = ForceMode2D.Impulse)
     {
         _rb.drag = 0;
         _rb.gravityScale = 0;
@@ -27,12 +27,12 @@ public class KinesisObject : KinesisObjectBase
 
         _rb.velocity = vector;
     }
-    public override void AddPSYForce(Vector2 vector)
+    public override void AddPSYForce(Vector2 vector, ForceMode2D mode = ForceMode2D.Impulse)
     {
         _rb.drag = 0;
         _rb.gravityScale = 1f;
         //transform.right = transform.right + (Vector3)vector;
-        _rb.AddForce(vector);
+        _rb.AddForce(vector, mode);
     }
 
     public override void StopPSYForce(bool notGravite = false)

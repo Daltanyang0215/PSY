@@ -25,8 +25,8 @@ public abstract class KinesisObjectBase : MonoBehaviour
 
     public abstract Vector3 GetVelocity { get;}
 
-    public abstract void SetPSYForce(Vector2 vector);
-    public abstract void AddPSYForce(Vector2 vector);
+    public abstract void SetPSYForce(Vector2 vector, ForceMode2D mode = ForceMode2D.Impulse);
+    public abstract void AddPSYForce(Vector2 vector , ForceMode2D mode = ForceMode2D.Impulse);
     public abstract void StopPSYForce(bool notGravite = false);
     public abstract void PSYCancle(bool notGravite = false);
     public void SetPSYPranet(Transform pranet)

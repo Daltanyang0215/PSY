@@ -17,5 +17,4 @@ MonoBehaviour:
   _psyMP: 2
   _isMPClip: 0
   _skillRange: 3
-  _skillMut: 3
-  _UpdataMut: 0.1
+  _skillMut: 10.875

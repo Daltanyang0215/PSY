@@ -9,9 +9,12 @@ public class PSYMove : PSYSkillBase
     private Transform _rangeCircle;
     private Transform _MoveVecIgame;
 
-    private KinesisObjectBase target;
+    private KinesisObjectBase _target;
+    private PhysicsMaterial2D _targetMaterial;
+    private PhysicsMaterial2D _moveMaterial;
     public override void OnPSYInit()
     {
+        _moveMaterial = new PhysicsMaterial2D();
         _rangeCircle = GameObject.Find("PSYMoveRange").transform;
         _MoveVecIgame = _rangeCircle.GetChild(0);
 
@@ -25,7 +28,10 @@ public class PSYMove : PSYSkillBase
         {
             IsActive = true;
             target.SetOrder(OrderType.Player, PSYID);
-            this.target = target;
+            _target = target;
+            // 물체의 마찰력 변경. 박스가 무거워서 레벨 1에서 움직이지를 않음
+            _targetMaterial = target.GetComponent<Rigidbody2D>().sharedMaterial;
+            target.GetComponent<Rigidbody2D>().sharedMaterial = _moveMaterial;
 
             PlayerState.Instance.CheckMpPoint(PSYMP, IsMPClip);
             _rangeCircle.transform.position = target.transform.position;
@@ -37,31 +43,33 @@ public class PSYMove : PSYSkillBase
     {
         if (!IsActive) return;
 
-        if (target == null)
+        if (_target == null)
         {
             PSYCancle();
             return;
         }
-        float pointLength = Mathf.Clamp((target.transform.position - point).magnitude / 3, 0, 1);
-        _rangeCircle.transform.position = target.transform.position;
-        _MoveVecIgame.up = (point - target.transform.position).normalized;
+        float pointLength = Mathf.Clamp((_target.transform.position - point).magnitude / 3, 0, 1);
+        _rangeCircle.transform.position = _target.transform.position;
+        _MoveVecIgame.up = (point - _target.transform.position).normalized;
         _MoveVecIgame.localScale = new Vector3(0.25f, pointLength);
 
         // 타겟이 총알이며, 거리가 좁고 속도가 작을때 강제 속도로 설정
-        if (target.ObjectType == KinesisObjectType.Bullet
+        if (_target.ObjectType == KinesisObjectType.Bullet
             && pointLength < .1f
-            && target.GetVelocity.magnitude < 1f)
+            && _target.GetVelocity.magnitude < 1f)
         {
-            target.SetPSYForce((point - target.transform.position).normalized * PlayerState.Instance.PsyLevel * _skillMut * pointLength);
+            _target.SetPSYForce((point - _target.transform.position).normalized * PlayerState.Instance.PsyLevel * _skillMut * pointLength);
         }
-        target.AddPSYForce((point - target.transform.position).normalized * PlayerState.Instance.PsyLevel * _skillMut * pointLength);
+        _target.AddPSYForce((point - _target.transform.position).normalized * PlayerState.Instance.PsyLevel * _skillMut * pointLength,
+                           _target.ObjectType == KinesisObjectType.None ? ForceMode2D.Force : ForceMode2D.Impulse);
     }
 
     public override void OnPSYExit(Vector3 point, LayerMask targetlayer)
     {
         if (IsActive)
         {
-            target.PSYCancle();
+            _target.GetComponent<Rigidbody2D>().sharedMaterial = _targetMaterial;
+            _target.PSYCancle();
             PSYCancle();
         }
     }
