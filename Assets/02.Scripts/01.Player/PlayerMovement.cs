@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
             if (_inputX != 0)
             {
                 //_rb.MovePosition(transform.position + Vector3.right * _inputX * PlayerState.Instance.DashRange);
-                _externalVec += Vector2.right * _inputX * PlayerState.Instance.DashRange;
+                _externalVec += Vector2.right * _inputX * PlayerState.Instance.DashRange + Vector2.up*0.2f;
                 _dashTimer = PlayerState.Instance.DashDelay;
             }
         }

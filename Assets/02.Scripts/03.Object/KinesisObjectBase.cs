@@ -15,6 +15,7 @@ public enum KinesisObjectType
 }
 public abstract class KinesisObjectBase : MonoBehaviour
 {
+    public int objectID;
     public OrderType Order { get; private set; }
     [SerializeField] KinesisObjectType _obejctType;
     public KinesisObjectType ObjectType => _obejctType;
