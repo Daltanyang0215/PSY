@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517cc7efe5c3cca48984394c524bdf45, type: 3}
   m_Name: Gun
   m_EditorClassIdentifier: 
-  _hp: 1
+  _hp: 10
   _moveSpeed: 1
-  _attackCool: 0.25
-  _bulletSpeed: 25
+  _attackCool: 2
+  _bulletSpeed: 5
+  _doDieExplosion: 1
+  _explodeRange: 5
+  _explodeDamage: 1

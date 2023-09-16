@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class KinesisObject : KinesisObjectBase
 {
-    private Rigidbody2D _rb;
 
-    public override Vector3 GetVelocity => _rb.velocity;
 
     private void Awake()
     {

@@ -905,7 +905,7 @@ MonoBehaviour:
     m_Bits: 3585
   _attackTargetLayer:
     serializedVersion: 2
-    m_Bits: 2099200
+    m_Bits: 3147776
   _keyboardskills:
   - name: PSYStop
     inputKey: 101

@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class TestBullet : KinesisObjectBase
 {
-    private Rigidbody2D _rb;
     [SerializeField] private Vector2 _moveVec;
     [SerializeField] private int damage;
-
-    public override Vector3 GetVelocity => _rb.velocity;
 
     private void Awake()
     {

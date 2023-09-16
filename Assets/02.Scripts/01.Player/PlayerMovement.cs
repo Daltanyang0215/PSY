@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveVec;
     private float _inputX;
 
-    private bool _islongJump;
     private bool _canJump;
 
     private bool _isGround;
@@ -108,7 +107,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && _canJump)
         {
-            _islongJump = true;
             _rb.gravityScale = 2;
             _rb.AddForce(Vector2.up * PlayerState.Instance.JumpPower, ForceMode2D.Impulse);
         }

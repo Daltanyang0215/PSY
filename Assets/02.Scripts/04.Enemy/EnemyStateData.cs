@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyState",menuName = "Enemy/EnemyState")]
+[CreateAssetMenu(fileName = "EnemyState", menuName = "Enemy/EnemyState")]
 public class EnemyStateData : ScriptableObject
 {
     [SerializeField] private int _hp;
@@ -16,4 +16,11 @@ public class EnemyStateData : ScriptableObject
 
     [SerializeField] private float _bulletSpeed;
     public float BulletSpeed => _bulletSpeed;
+
+    [SerializeField] private bool _doDieExplosion;
+    public bool DoDieExplosion => _doDieExplosion;
+    [SerializeField] private float _explodeRange;
+    public float ExplodeRange => _explodeRange;
+    [SerializeField] private int _explodeDamage;
+    public int ExplodeDamage => _explodeDamage;
 }

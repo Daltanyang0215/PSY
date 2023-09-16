@@ -43,7 +43,8 @@ public class PSYMove : PSYSkillBase
     {
         if (!IsActive) return;
 
-        if (_target == null)
+        if (_target == null
+            || (_target is EnemyBase && !(_target as EnemyBase).IsLive))
         {
             PSYCancle();
             return;

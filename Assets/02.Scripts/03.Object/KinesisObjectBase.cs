@@ -11,7 +11,8 @@ public enum OrderType
 public enum KinesisObjectType
 {
     None,
-    Bullet
+    Bullet,
+    Enemy
 }
 public abstract class KinesisObjectBase : MonoBehaviour
 {
@@ -24,7 +25,8 @@ public abstract class KinesisObjectBase : MonoBehaviour
     public int PSYLevel => _psyLevel;
     public Transform PSYPranet { get; private set; }
 
-    public abstract Vector3 GetVelocity { get;}
+    protected Rigidbody2D _rb;
+    public Vector2 GetVelocity => _rb.velocity;
 
     public abstract void SetPSYForce(Vector2 vector, ForceMode2D mode = ForceMode2D.Impulse);
     public abstract void AddPSYForce(Vector2 vector , ForceMode2D mode = ForceMode2D.Impulse);

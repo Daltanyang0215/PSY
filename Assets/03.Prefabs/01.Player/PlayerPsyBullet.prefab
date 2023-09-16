@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4330474801566573945}
   - component: {fileID: 2939079635873575372}
   - component: {fileID: 131017161908844631}
-  m_Layer: 21
+  m_Layer: 7
   m_Name: PlayerPsyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
