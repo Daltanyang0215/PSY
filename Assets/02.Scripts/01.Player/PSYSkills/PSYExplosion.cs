@@ -25,6 +25,10 @@ public class PSYExplosion : PSYSkillBase
                 target.AddPSYForce((kineses.transform.position - (point + Vector3.up)).normalized * PlayerState.Instance.PsyLevel * _skillMut,
                                    ForceMode2D.Impulse);
             }
+            if (kineses.CompareTag("CanDestroyObject") && kineses.TryGetComponent(out IHitAction hit))
+            {
+                hit.OnHit(PSYLevel);
+            }
         }
     }
    

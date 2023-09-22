@@ -10,17 +10,28 @@ public class PSYGrap : PSYSkillBase
     [SerializeField] private float _psyPowerMut;
     [SerializeField] private KinesisObjectBase _psyBulletPrefab;
     [SerializeField] private int _psyBulletInitCount;
-    private Stack<KinesisObjectBase> _psyBullets;
-    private List<KinesisObjectBase> kinesisObjects = new List<KinesisObjectBase>();
 
     private int _bulletSelect;
     public int BulletSelect => _bulletSelect;
 
-    private List<List<KinesisObjectBase>> _bulletObjects = new List<List<KinesisObjectBase>>();
+    //private List<List<KinesisObjectBase>> _bulletObjects = new List<List<KinesisObjectBase>>();
+    private List<List<KinesisObjectBase>> _bulletObjects;
     public List<List<KinesisObjectBase>> BulletObjects => _bulletObjects;
+
+    public void DefualtBulletInit()
+    {
+        for (int i = _psyBulletInitCount - _bulletObjects[0].Count; i > 0; i--)
+        {
+            KinesisObjectBase addbuulet = Instantiate(_psyBulletPrefab, Vector3.zero, Quaternion.identity);
+            addbuulet.SetOrder(OrderType.Player, PSYID);
+            addbuulet.gameObject.SetActive(false);
+            _bulletObjects[0].Add(addbuulet);
+        }
+    }
 
     public override void OnPSYInit()
     {
+
         //kinesisObjects.Clear();
         //_psyBullets = new Stack<KinesisObjectBase>();
         //for (int i = 0; i < _psyBulletInitCount; i++)
@@ -30,7 +41,10 @@ public class PSYGrap : PSYSkillBase
         //    addbuulet.gameObject.SetActive(false);
         //    _psyBullets.Push(addbuulet);
         //}
+        PlayerState.Instance.PlayerRecoveryAction += () => DefualtBulletInit();
+
         _bulletSelect = 0;
+        _bulletObjects = PlayerState.Instance.bulletObjects;
         _bulletObjects.Clear();
 
         List<KinesisObjectBase> addBulletPF = new List<KinesisObjectBase>();

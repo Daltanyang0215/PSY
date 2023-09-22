@@ -15,6 +15,7 @@ MonoBehaviour:
   _hp: 10
   _moveSpeed: 1
   _attackCool: 2
+  _collisionDamage: 1
   _bulletSpeed: 5
   _doDieExplosion: 1
   _explodeRange: 5

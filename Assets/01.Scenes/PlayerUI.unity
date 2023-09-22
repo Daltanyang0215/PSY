@@ -1782,6 +1782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletdata: {fileID: 11400000, guid: bacc82cc99a91ff48a4fdf67e28f442b, type: 2}
+  _defaultSprite: {fileID: -687995392, guid: 35038d244b7970445aa1438b75a986e9, type: 3}
   _mainBulletImage: {fileID: 645002088}
   _mainBulletCount: {fileID: 1400803151}
   _upBulletImage: {fileID: 479096603}

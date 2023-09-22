@@ -13,6 +13,8 @@ public class EnemyStateData : ScriptableObject
 
     [SerializeField] private float _attackCool;
     public float AttackCool => _attackCool;
+    [SerializeField] private int _collisionDamage;
+    public int CollisionDamage => _collisionDamage;
 
     [SerializeField] private float _bulletSpeed;
     public float BulletSpeed => _bulletSpeed;

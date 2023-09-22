@@ -11,26 +11,46 @@ public class EnemyBase : KinesisObject, IHitAction
 
     [SerializeField] protected ParticleSystem _destroyParticle;
 
+    private Vector2 _initPosition;
+    private Quaternion _initrotate;
     public bool IsLive { get; private set; }
 
     private GameObject _renderer;
-    private CircleCollider2D _collider;
+    private Collider2D _collider;
     private float _initGravity;
 
-    protected virtual void Start()
+    private void Awake()
     {
+        _initPosition = transform.position;
+        _initrotate = transform.rotation;
+
         IsLive = true;
 
         SetOrder(OrderType.Enemy);
 
         _curHP = state.HP;
         _renderer = transform.GetComponentInChildren<SpriteRenderer>().gameObject;
-        _collider = GetComponent<CircleCollider2D>();
+        _collider = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
         _initGravity = _rb.gravityScale;
     }
 
+    protected virtual void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     protected virtual void Update() { }
+
+    protected virtual void OnEnable()
+    {
+        transform.SetPositionAndRotation(_initPosition, _initrotate);
+        IsLive = true;
+        SetOrder(OrderType.Enemy);
+        _curHP = state.HP;
+        _renderer.SetActive(true);
+        _collider.enabled = true;
+    }
 
     public virtual void OnHit(int damage)
     {
@@ -73,7 +93,7 @@ public class EnemyBase : KinesisObject, IHitAction
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<IHitAction>().OnHit(1);
+            collision.GetComponent<IHitAction>().OnHit(state.CollisionDamage);
         }
     }
 
@@ -81,7 +101,7 @@ public class EnemyBase : KinesisObject, IHitAction
     {
         if (collision.collider.CompareTag("Player"))
         {
-            collision.collider.GetComponent<IHitAction>().OnHit(1);
+            collision.collider.GetComponent<IHitAction>().OnHit(state.CollisionDamage);
         }
         else
         {

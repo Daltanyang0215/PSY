@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = GameObject.Find("MainGameManager").GetComponent<GameManager>();
                 DontDestroyOnLoad(instance);
@@ -22,5 +22,16 @@ public class GameManager : MonoBehaviour
     public NPCTalkDatabase TalkDatabase => talkDatabase;
 
     public FieldNPC CurTalkNPC { get; set; }
-    
+
+    [SerializeField] private GameProgress progress;
+    public int CurEventID => progress.curEventID;
+
+    public void AddEventID(int index)
+    {
+        progress.curEventID += index;
+    }
+    public void SetEventID(int index)
+    {
+        progress.curEventID = index;
+    }
 }

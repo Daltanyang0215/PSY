@@ -11,8 +11,14 @@ public class FieldEventConnet : MonoBehaviour
     {
         foreach (FieldEvent fieldEvent in _fieldEvents)
         {
+            // 이벤트가 진행도에 따르는지 확인 및 진행도가 같지 않다면 넘기기
+            if (fieldEvent.activeEventID != -1 && fieldEvent.activeEventID != GameManager.Instance.CurEventID) continue;
+            // 일회성 이벤트 이면서 실행 되었다면 넘기기
+
+
             // 모든 버튼을 눌린상태인지 확인
             bool allButtonPress = true;
+
             foreach (FieldEventTrigger trigger in fieldEvent.triggers)
             {
                 if (trigger.isPressed == false) // 하나라도 안되면 캔슬
@@ -31,9 +37,8 @@ public class FieldEventConnet : MonoBehaviour
                     {
                         if (fieldEvent.isOnce && fieldEvent.isAction == true)
                         {
-                            return;
+                            break;
                         }
-
                         fieldEvent.isAction = true;
                         execution.OnEvnentExecution();
                     }
@@ -47,7 +52,6 @@ public class FieldEventConnet : MonoBehaviour
                     {
                         if (!fieldEvent.isOnce)
                             fieldEvent.isAction = false;
-
 
                         execution.OnEvnentCancle();
                     }
@@ -83,6 +87,7 @@ public class FieldEvent
 {
     [SerializeField] private string eventName;
     public bool isOnce;
+    public int activeEventID = -1;
     [HideInInspector] public bool isAction;
     public FieldEventTrigger[] triggers;
     public FieldEventExecution[] executionEvents;
