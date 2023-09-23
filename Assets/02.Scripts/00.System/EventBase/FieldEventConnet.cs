@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FieldEventConnet : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class FieldEventConnet : MonoBehaviour
 
             if (allButtonPress)
             {
+                // 상태 변화시 일회성으로 실행
+                if (!fieldEvent.isAction)
+                {
+                    fieldEvent.executionToUnityEvents.Invoke();
+                }
+
                 // 이벤트 완료 실행
                 foreach (FieldEventExecution execution in fieldEvent.executionEvents)
                 {
@@ -59,6 +66,16 @@ public class FieldEventConnet : MonoBehaviour
             }
         }
     }
+
+    #region UnityEvents
+
+    public void UnlockPlayerSkill(int skillID)
+    {
+        PlayerState.Instance.OnUnlockSkill(skillID);
+    }
+
+    #endregion
+
 
     [ExecuteInEditMode]
     private void OnDrawGizmos()
@@ -91,5 +108,6 @@ public class FieldEvent
     [HideInInspector] public bool isAction;
     public FieldEventTrigger[] triggers;
     public FieldEventExecution[] executionEvents;
+    public UnityEvent executionToUnityEvents;
 }
 

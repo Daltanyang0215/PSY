@@ -78,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void PlayerDash()
     {
+        if (!PlayerState.Instance.DoUnlockDash) return; 
+
         _dashTimer -= Time.deltaTime;
         if (Input.GetButtonDown("Dash") && _dashTimer < 0)
         {

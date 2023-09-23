@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class FieldPushButton : FieldEventTrigger
+public class FieldPushButton : FieldEventTrigger, IInteraction
 {
     private enum PressType
     {
@@ -12,7 +13,8 @@ public class FieldPushButton : FieldEventTrigger
         Press,              // 누르고 있어야됨
         UnPress,            // 눌리면 반대로
         OnlyPlayerPush,     // 플레이어 한정 한번만 누름
-        OnlyPlayerPress     // 플레이어 한정 누르고 있어야됨
+        OnlyPlayerPress,    // 플레이어 한정 누르고 있어야됨
+        OnInteraction
     }
 
     [SerializeField] private PressType _pressType;
@@ -20,15 +22,27 @@ public class FieldPushButton : FieldEventTrigger
     [Tooltip("마우스 조작으로만 실행되는 물건 인지 지정")]
     [SerializeField] private bool _isOnlyClick;
 
+    private Transform _textTransform;
+    public bool IsCanInteraction => _pressType == PressType.OnInteraction;
+
+    private void Start()
+    {
+        if (IsCanInteraction)
+        {
+            _textTransform = transform.GetChild(0);
+            _textTransform.gameObject.SetActive(false);
+        }
+    }
+
     public void OnPSYClick()
     {
         if (!_isOnlyClick) return;
 
-        if(_pressType == PressType.Push)
+        if (_pressType == PressType.Push)
         {
             isPressed = true;
         }
-        else if( _pressType == PressType.Press)
+        else if (_pressType == PressType.Press)
         {
             isPressed = !isPressed;
         }
@@ -55,6 +69,10 @@ public class FieldPushButton : FieldEventTrigger
                     {
                         isPressed = true;
                     }
+                    break;
+                case PressType.OnInteraction:
+                    if (collision.CompareTag("Player"))
+                        OnInteractionZoneEnter();
                     break;
                 default:
                     break;
@@ -86,10 +104,31 @@ public class FieldPushButton : FieldEventTrigger
                         isPressed = false;
                     }
                     break;
+                case PressType.OnInteraction:
+                    if (collision.CompareTag("Player"))
+                        OnInteractionZoneExit();
+                    break;
                 default:
                     break;
             }
         }
         _animator?.SetBool("OnPress", isPressed);
+    }
+
+    public void OnInteractionZoneEnter()
+    {
+        _textTransform.gameObject.SetActive(true);
+    }
+
+    public void OnInteraction()
+    {
+        isPressed = true;
+        _pressType = PressType.None;
+        OnInteractionZoneExit();
+    }
+
+    public void OnInteractionZoneExit()
+    {
+        _textTransform.gameObject.SetActive(false);
     }
 }

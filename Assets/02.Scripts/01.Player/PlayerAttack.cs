@@ -34,6 +34,8 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (PSYSkillKeySet skillSet in _skillKeyboardSets)
         {
+            if (!skillSet.isUnlock) continue;
+
             if (Input.GetKeyDown(skillSet.inputKey))
             {
                 skillSet.skill.OnPSYEnter(transform.position, PlayerState.Instance.AttackTargetLayer);
@@ -58,6 +60,8 @@ public class PlayerAttack : MonoBehaviour
 
         foreach (PSYSkillKeySet skillSet in _skillMouseSets)
         {
+            if (!skillSet.isUnlock) continue;
+
             if (Input.GetKeyDown(skillSet.inputKey))
             {
                 skillSet.skill.OnPSYEnter(_mousePos, PlayerState.Instance.AttackTargetLayer);
@@ -81,6 +85,7 @@ public class PlayerAttack : MonoBehaviour
 public class PSYSkillKeySet
 {
     public string name;
+    public bool isUnlock;
     public KeyCode inputKey;
     public PSYSkillBase skill;
 }

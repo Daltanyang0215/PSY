@@ -45,6 +45,8 @@ public class PlayerState : MonoBehaviour, IHitAction
     public float MoveSpeed => _moveSpeed;
     [SerializeField] private float _jumpPower;
     public float JumpPower => _jumpPower;
+    [SerializeField] private bool _doUnlockDash;
+    public bool DoUnlockDash => _doUnlockDash;
     [SerializeField] private float _dashRange;
     public float DashRange => _dashRange;
     [SerializeField] private float _dashDelay;
@@ -85,7 +87,7 @@ public class PlayerState : MonoBehaviour, IHitAction
         OnCheckZoneCamera();
 
         // recovery test. will delete
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             PlayerFullRecovery();
         }
@@ -135,9 +137,13 @@ public class PlayerState : MonoBehaviour, IHitAction
             {
                 GameManager.Instance.CurTalkNPC.OnInteraction();
             }
-            else if (Physics2D.OverlapBox(transform.position + (Vector3.up * _playerSize.y * 0.5f), _playerSize, 0, AttackTargetLayer).TryGetComponent(out IInteraction interaction))
+            else
             {
-                interaction.OnInteraction();
+                Collider2D checkcollider = Physics2D.OverlapBox(transform.position + (Vector3.up * _playerSize.y * 0.5f), _playerSize, 0, AttackTargetLayer);
+                if (checkcollider && checkcollider.TryGetComponent(out IInteraction interaction))
+                {
+                    interaction.OnInteraction();
+                }
             }
         }
     }
@@ -181,6 +187,29 @@ public class PlayerState : MonoBehaviour, IHitAction
         _mp = _mpMax;
         MpClamp();
         PlayerRecoveryAction?.Invoke();
+    }
+
+    public void OnUnlockSkill(int skillID = 0)
+    {
+        if (skillID == 0)
+        {
+            _doUnlockDash = true;
+            return;
+        }
+
+        // 스킬 아이디 검색 및 동일 스킬을 언락
+
+        PSYSkillKeySet unlockskill = _keyboardskills.Find(x => x.skill.PSYID == skillID);
+        if (unlockskill != null)
+        {
+            unlockskill.isUnlock = true;
+        }
+
+        unlockskill = _mouseskills.Find(x => x.skill.PSYID == skillID);
+        if (unlockskill != null)
+        {
+            unlockskill.isUnlock = true;
+        }
     }
 
     public void OnPlayerStop(bool isStop)
